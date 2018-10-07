@@ -1,11 +1,16 @@
 TIDY_FLAGS = -checks='boost-*,bugprone-*,cert-*,clang-analyzer-*,cppcoreguidelines-*,hicpp-*,misc-*,modernize-*,performance-*,readability-*'
 
+MACROS_has_include := $(shell export PATH=$(PATH); $(CXX) -E -dM has_include.cpp)
+
 CPP := $(wildcard *.cpp)
 BIN := $(subst .cpp,.out,$(CPP))
 DEPS := $(subst .cpp,.d,$(CPP))
 
 LIBS +=
 LIBS_thread = -lpthread
+ifneq ($(findstring __HAS_CRYPTOPP__,$(MACROS_has_include)),)
+LIBS_has_include = -lcryptopp
+endif
 
 CXXFLAGS += -Wall -Wextra -Werror -g -MMD -MP
 
