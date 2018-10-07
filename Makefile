@@ -1,4 +1,4 @@
-#TIDY_FLAGS = -checks='boost-*,bugprone-*,cert-*,clang-analyzer-*,cppcoreguidelines-*,hicpp-*,misc-*,modernize-*,performance-*,readability-*'
+TIDY_FLAGS = -checks='boost-*,bugprone-*,cert-*,clang-analyzer-*,cppcoreguidelines-*,hicpp-*,misc-*,modernize-*,performance-*,readability-*'
 
 CPP := $(wildcard *.cpp)
 BIN := $(subst .cpp,.out,$(CPP))
