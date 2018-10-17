@@ -13,7 +13,10 @@ ifneq ($(findstring __HAS_CRYPTOPP__,$(MACROS_has_include)),)
 LIBS_has_include = -lcryptopp
 endif
 
-CXXFLAGS += -Wall -Wextra -Werror -g -MMD -MP
+CXXFLAGS += -Wall -Wextra -Werror -Wnon-virtual-dtor -pedantic
+CXXFLAGS += -std=c++17
+CXXFLAGS += -g
+CXXFLAGS += -MMD -MP
 
 .PHONY: all
 all: $(BIN)
