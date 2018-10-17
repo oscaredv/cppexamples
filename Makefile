@@ -7,6 +7,7 @@ BIN := $(subst .cpp,.out,$(CPP))
 DEPS := $(subst .cpp,.d,$(CPP))
 
 LIBS +=
+LIBS_filesystem = -lstdc++fs
 LIBS_thread = -lpthread
 ifneq ($(findstring __HAS_CRYPTOPP__,$(MACROS_has_include)),)
 LIBS_has_include = -lcryptopp
