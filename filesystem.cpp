@@ -118,6 +118,7 @@ void listFile(const fs::path& file)
     fs::file_status status = fs::status(file);
     cout << listType(status) << listPerms(status.permissions());
     cout << " " << fs::hard_link_count(file);
+
     cout << " " << setw(5);
     switch (status.type())
     {
@@ -133,6 +134,11 @@ void listFile(const fs::path& file)
         cout << "0";
         break;
     }
+
+    auto lastWriteTime = system_clock::to_time_t(fs::last_write_time(file));
+    auto tm = std::localtime(&lastWriteTime);
+    cout << " " << put_time(tm, "%b.  %e %H:%M");
+
     cout << " " << filename << endl;
 }
 
