@@ -1,4 +1,4 @@
-TIDY_FLAGS = -checks='boost-*,bugprone-*,cert-*,clang-analyzer-*,cppcoreguidelines-*,hicpp-*,misc-*,modernize-*,performance-*,readability-*'
+TIDY_FLAGS = -quiet -checks='boost-*,bugprone-*,cert-*,clang-analyzer-*,cppcoreguidelines-*,hicpp-*,misc-*,modernize-*,performance-*,readability-*'
 
 MACROS_has_include := $(shell export PATH=$(PATH); $(CXX) -E -dM has_include.cpp)
 
@@ -28,7 +28,8 @@ clean:
 
 %.out: %.cpp Makefile
 ifneq (,$(TIDY_FLAGS))
-	clang-tidy $(TIDY_FLAGS) $< -- $(CXXFLAGS)
+	@echo "clang-tidy $<"
+	@clang-tidy $(TIDY_FLAGS) $< -- $(CXXFLAGS)
 endif
 	$(CXX) $(CXXFLAGS) -o $@ $< $(LIBS) $(LIBS_$(basename $@))
 
