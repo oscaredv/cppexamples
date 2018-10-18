@@ -3,8 +3,8 @@ TIDY_FLAGS = -quiet -checks='boost-*,bugprone-*,cert-*,clang-analyzer-*,cppcoreg
 MACROS_has_include := $(shell export PATH=$(PATH); $(CXX) -E -dM has_include.cpp)
 
 CPP := $(wildcard *.cpp)
-BIN := $(subst .cpp,.out,$(CPP))
-DEPS := $(subst .cpp,.d,$(CPP))
+BIN := $(addprefix bin/,$(subst .cpp,.out,$(CPP)))
+DEPS := $(addprefix bin/,$(subst .cpp,.d,$(CPP)))
 
 LIBS +=
 LIBS_filesystem = -lstdc++fs
@@ -26,11 +26,12 @@ clean:
 	$(RM) $(BIN)
 	$(RM) $(DEPS)
 
-%.out: %.cpp Makefile
+bin/%.out: %.cpp
 ifneq (,$(TIDY_FLAGS))
 	@echo "clang-tidy $<"
 	@clang-tidy $(TIDY_FLAGS) $< -- $(CXXFLAGS)
 endif
-	$(CXX) $(CXXFLAGS) -o $@ $< $(LIBS) $(LIBS_$(basename $@))
+	@mkdir -p bin
+	$(CXX) $(CXXFLAGS) -o $@ $< $(LIBS) $(LIBS_$(basename $<))
 
 -include $(DEPS)
