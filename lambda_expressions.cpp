@@ -3,6 +3,8 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
+#include <iterator>
 
 using std::cout;
 using std::mt19937_64;
@@ -12,11 +14,6 @@ using std::for_each;
 using std::cout;
 using std::endl;
 
-void print(double num)
-{
-    cout << num << endl;
-}
-
 int main()
 {
     mt19937_64 rng(time(nullptr));
@@ -25,7 +22,6 @@ int main()
     array<double, 5> numbers =
     { };
 
-    cout << "Random numbers:" << endl;
     // Generate random numbers in array using range-based for loop
     for (auto& num : numbers)
     {
@@ -35,17 +31,27 @@ int main()
     // A lambda expression lets you define functions locally from the place it is called
     // Lambda expression has the form: [capture](parameters)->return-type {body}
 
-    // Print numbers using for_each and function
+    cout << "Random numbers (printed using lambda in for_each):" << endl;
+    // Print numbers using for_each and lambda function
+    for_each(numbers.begin(), numbers.end(), [](double num)
+    {   cout << num << endl;});
+
+    // Round the numbers using transform and the function round
+    std::transform(numbers.begin(), numbers.end(), numbers.begin(), round);
+
+    cout << "Rounded numbers (printed using lambda defined as variable in for_each):" << endl;
+    // Define lambda for printing as variable
+    auto print = [](double num)
+    {   std::cout << num << endl;};
+    // Then print all numbers using the lambda above in a for_each
     for_each(numbers.begin(), numbers.end(), print);
 
-    // Round the numbers using for_each and lambda expression
-    for_each(numbers.begin(), numbers.end(), [](double& d)
-    {   d = round(d);});
-
-    cout << "Rounded numbers:" << endl;
-    // Print numbers using for_each and lambda expression
-    for_each(numbers.begin(), numbers.end(), [](double d)
-    {   cout << d << endl;});
+    // Lambdas are cool, but often a simple range-based for loop is cleaner
+    cout << "Rounded numbers (printed using range-based for loop):" << endl;
+    for (auto num : numbers)
+    {
+        cout << num << endl;
+    }
 
     return 0;
 }
