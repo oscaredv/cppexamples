@@ -1,16 +1,17 @@
+// Examples showing lambda expressions
+// Requires c++11
 #include <random>
 #include <array>
-#include <iostream>
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-#include <iterator>
 
 using std::cout;
 using std::mt19937_64;
 using std::uniform_real_distribution;
 using std::array;
 using std::for_each;
+using std::transform;
 using std::cout;
 using std::endl;
 
@@ -37,12 +38,12 @@ int main()
     {   cout << num << endl;});
 
     // Round the numbers using transform and the function round
-    std::transform(numbers.begin(), numbers.end(), numbers.begin(), round);
+    transform(numbers.begin(), numbers.end(), numbers.begin(), round);
 
     cout << "Rounded numbers (printed using lambda defined as variable in for_each):" << endl;
     // Define lambda for printing as variable
     auto print = [](double num)
-    {   std::cout << num << endl;};
+    {   cout << num << endl;};
     // Then print all numbers using the lambda above in a for_each
     for_each(numbers.begin(), numbers.end(), print);
 
