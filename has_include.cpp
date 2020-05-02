@@ -1,29 +1,27 @@
 // Example using has_include to detect if an include file is available
 #include <iostream>
-#include <string>
 
-#if __has_include(<cryptopp/base64.h>)
-#define __HAS_CRYPTOPP__
-#include <cryptopp/base64.h>
-#endif
 
 using namespace std;
 
-string decode(const string& encoded) {
-	string decoded;
-#ifdef __HAS_CRYPTOPP__
-	CryptoPP::StringSource ss(encoded, true, new CryptoPP::Base64Decoder(new CryptoPP::StringSink(decoded))); //NOLINT
-#else
-	(void) encoded;
-	decoded = "Unable to decode because <cryptopp/base64.h> not available!";
-#endif
-	return decoded;
-}
-
 int main() {
+#ifdef __has_include
 
-	string encoded = "SSBjYW1lIGhlcmUgdG8ga2ljayBhc3MgYW5kIGNoZXcgYnViYmxlZ3VtLCBhbmQgSSdtIGFsbCBvdXQgb2YgZ3VtLi4u";
+#if __has_include(<experimental/filesystem>)
+	cout << "Include file <experimental/filesystem> available." << endl;
+#else
+	cout << "Include file <experimental/filesystem> not available." << endl;
+#endif
 
-	cout << "base64decode: " << decode(encoded) << endl; // NOLINT
+#if __has_include(<filesystem>)
+	cout << "Include file <filesystem> available." << endl;
+#else
+	cout << "Include file <filesystem> not available." << endl;
+#endif
+
+#else
+	cout << "Feature __has_include not available..." << endl;
+#endif
+
 	return 0;
 }
