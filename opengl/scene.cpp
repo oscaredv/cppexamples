@@ -8,6 +8,7 @@ Scene::Scene() {
   glewExperimental = GL_TRUE;
   glewInit();
 
+  glEnable(GL_BLEND);
   glEnable(GL_DEPTH_TEST);
 
   glMatrixMode(GL_PROJECTION);
@@ -37,6 +38,8 @@ void Scene::SetupLighting() {
 }
 
 void Scene::draw() {
+  glEnable(GL_LIGHTING);
+
   glLoadIdentity();
 
   camera_.move();
