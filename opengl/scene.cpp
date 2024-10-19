@@ -17,6 +17,10 @@ Scene::Scene() {
 
   glMatrixMode(GL_MODELVIEW);
 
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
+  glFrontFace(GL_CW);
+
   SetupLighting();
 
   dice_ = std::make_unique<Dice>();
@@ -44,7 +48,12 @@ void Scene::draw() {
 
   camera_.move();
 
-  glRotatef(SDL_GetTicks() * 0.1f, 1.0f, -0.8f, 0.5f);
+  // glRotatef(SDL_GetTicks() * 0.1f, 1.0f, -0.8f, 0.5f);
+  glRotatef(angle_x_, 0.0f, 1.0f, 0.0f);
+  glRotatef(angle_y_, 1.0f, 0.0f, 0.0f);
+
+  angle_x_ += speed_x_;
+  angle_y_ += speed_y_;
 
   dice_->draw();
 }

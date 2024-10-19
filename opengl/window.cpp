@@ -63,6 +63,30 @@ void Window::poll_events(bool &quit) {
       case SDLK_ESCAPE:
         quit = true;
         break;
+      case SDLK_UP:
+        scene_->set_speed_y(-1.0f);
+        break;
+      case SDLK_DOWN:
+        scene_->set_speed_y(1.0f);
+        break;
+      case SDLK_LEFT:
+        scene_->set_speed_x(-1.0f);
+        break;
+      case SDLK_RIGHT:
+        scene_->set_speed_x(1.0f);
+        break;
+      }
+      break;
+    case SDL_KEYUP:
+      switch (event.key.keysym.sym) {
+      case SDLK_UP:
+      case SDLK_DOWN:
+        scene_->set_speed_y(0.0f);
+        break;
+      case SDLK_LEFT:
+      case SDLK_RIGHT:
+        scene_->set_speed_x(0.0f);
+        break;
       }
       break;
     }
